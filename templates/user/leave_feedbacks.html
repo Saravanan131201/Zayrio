@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Leave Your Feedback</h2>
+
+  {% if order_exists %}
+
+  <form action="{{ url_for('submit_feedback') }}" method="POST" class="shadow p-4 rounded bg-light">
+    <div class="mb-3">
+      <label for="feedback_text" class="form-label">Your Feedback</label>
+      <textarea class="form-control" id="feedback_text" name="feedback_text" rows="4" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="rating" class="form-label">Rating</label>
+      <select class="form-select" id="rating" name="rating" required>
+        <option selected disabled value="">Choose a rating</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+        <option value="4">⭐⭐⭐⭐ 4 - Very Good</option>
+        <option value="3">⭐⭐⭐ 3 - Good</option>
+        <option value="2">⭐⭐ 2 - Fair</option>
+        <option value="1">⭐ 1 - Poor</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Submit Feedback</button>
+  </form>
+
+  {% else %}
+    <br>
+    <p class="text-muted text-center"><em> <i class="bi bi-shield-lock-fill me-2"></i>Terms and Conditions:</em></p>
+    <p class="text-muted text-center"><em>You can only leave a feedback after purchasing atleast one product.</em></p>
+    <p class="text-muted text-center"><em>If u had placed order the form will be automatically active after the product is Delivered.</em></p>
+    <p class="text-muted text-center"><em>Thank You for your patience....Keep Shopping !!!</em></p>
+{% endif %}
+
+</div>
+
+
+{% endblock %}

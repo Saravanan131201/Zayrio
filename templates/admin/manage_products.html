@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h3 class="mb-4 text-center">Manage Products</h3>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for product in products %}
+    <div class="col">
+      <div class="card shadow h-100">
+        <a href="{{ url_for('product_summary', product_id=product.product_id) }}">
+          <img src="{{ url_for('static', filename=product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height: 250px; object-fit: contain;">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text text-muted mb-1"><strong>Brand:</strong> {{ product.brand }}</p>
+          <p class="card-text"><strong>Price:</strong> ₹{{ product.price }} <span class="text-success">(-{{ product.discount }}%)</span></p>
+
+          <div class="mb-2">
+            <span class="badge bg-primary">{{ product.category }}</span>
+            <span class="badge bg-secondary">{{ product.subcategory }}</span>
+            <span class="badge bg-info text-dark">{{ product.product_type }}</span>
+          </div>
+
+          <p class="card-text" style="font-size: 0.9rem;">
+            {{ product.product_description[:100] }}{% if product.product_description|length > 100 %}...{% endif %}
+          </p>
+        </div>
+        <div class="card-footer bg-transparent border-0 d-flex justify-content-between gap-2">
+          <a href="{{ url_for('edit_product', product_id=product.product_id) }}" class="btn btn-sm btn-outline-primary w-50">Update</a>
+
+          <button class="btn btn-sm btn-outline-danger w-50" data-bs-toggle="modal" data-bs-target="#deleteModal{{ product.product_id }}">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal{{ product.product_id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ product.product_id }}" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel{{ product.product_id }}">Delete Product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete <strong>{{ product.name }}</strong>?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_product', product_id=product.product_id) }}" class="btn btn-danger">Confirm Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

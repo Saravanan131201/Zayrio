@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row g-5 align-items-start">
+    
+    <!-- Product Image -->
+    <div class="col-md-5 text-center">
+      <img src="{{ url_for('static', filename=product.image) }}" 
+           alt="{{ product.name }}"
+           class="img-fluid rounded shadow"
+           style="max-height: 400px; object-fit: contain;">
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-7">
+      <h2 class="mb-3">{{ product.name }}</h2>
+      
+      <p class="mb-1">
+        <del class="text-muted">₹{{ product.price }}</del> 
+        <span class="fw-bold text-success fs-5 ms-2">₹{{ product.discount_price }}</span>
+        <p class="fw-bold text-success ms-2">( {{ product.discount }}% OFF)</p>
+      </p>
+      {% if product.discount_price > 699%}
+        <p class="text-primary small">Free Delivery</p>
+      {% else %}
+        <p class="text-primary small">Delivery: ₹80</p>
+      {% endif %}
+      
+
+      <!-- Overview -->
+      {% if product.product_description %}
+        <h5 class="mt-4">Overview:</h5>
+        <div class="mb-3" style="white-space: pre-line; line-height: 1.6;">
+          {{ product.product_description }}
+        </div>
+      {% endif %}
+
+      <!-- Additional Details -->
+      {% if product.product_details %}
+        <h5>Additional Details:</h5>
+        <ul>
+          {% for detail in product.product_details.split('\r\n') %}
+            <li>{{ detail }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+       <!-- Returns & Exchange -->
+          <div class="col-md-4 col-sm-6">
+          <h5 class="mt-4">Return: </h5><img src="{{ url_for('static', filename='images/benefits/returns_exchange.jpg') }}" alt="Returns & Exchange" class="img-fluid rounded-3 shadow-sm w-100">
+          </div> <br>
+
+      {% if session.get('role') == 'user' %}
+          <form method="POST">
+              <div class="mb-3">
+                  <label for="quantity_{{ product.product_id }}" class="form-label fw-bold">Quantity (Max 10)</label>
+                  <input type="number" name="quantity" class="form-control" id="quantity_{{ product.product_id }}"
+                  value="1" min="1" max="10" required>
+              </div>
+
+                {% if product.product_type == 'Clothing' %}
+                <div class="mb-3">
+                  <label for="size_{{ product.product_id }}" class="form-label fw-bold">Select Size</label>
+                  <select name="size" class="form-select" id="size_{{ product.product_id }}" required>
+                    <option value="">Choose Size</option>
+                    <option value="S">Small (S)</option>
+                    <option value="M">Medium (M)</option>
+                    <option value="L">Large (L)</option>
+                    <option value="XL">Extra Large (XL)</option>
+                    <option value="XXL">XXL</option>
+                  </select>
+                </div>
+                {% endif %}
+
+  
+            <div class="d-grid gap-2">
+              <button type="submit"
+                      formaction="{{ url_for('add_to_cart', product_id=product.product_id) }}"
+                      formmethod="POST"
+                      class="btn btn-primary">
+                      Add to Cart <i class="bi bi-cart3"></i> 
+              </button>
+
+              <button type="submit"
+                      formaction="{{ url_for('buy_now', product_id=product.product_id) }}"
+                      formmethod="POST"
+                      name="source"
+                      value="direct_buy"
+                      class="btn btn-success">
+                      Buy Now (COD) <i class="bi bi-bag"></i>
+              </button>
+
+              <button type="submit"
+                      formaction="{{ url_for('add_to_wishlist', product_id=product.product_id) }}"
+                      formmethod="POST"
+                      class="btn btn-outline-secondary">
+                      Add to Wishlist  <i class="bi bi-heart"></i>
+              </button>
+            </div>
+          </form>
+
+      {% endif %}
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <!-- User Reviews -->
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h4 class="mb-4">User Reviews &nbsp; |
+         {% if average_rating %}
+         <span class= "aria-current">
+         ⭐ {{ average_rating }}/5 ({{ review_count }} reviews)
+        </span>
+        {% else %}
+        <span class="text-muted">No reviews yet</span>
+        {% endif %}
+
+      </h4>
+     
+
+      {% if session.get('username') and session.get('role') == 'user' and is_verified_buyer    %}
+      
+      <p><em><i class="bi bi-shield-lock-fill me-2"></i>Terms and Conditions: </em></p>
+      <p class="text-muted"><em>1. Review only about the product and any issues about package or order delay will be allowed to leave it on feedback.</em></p>
+       <p class="text-muted"> <em>2. No Offensive reviews. If it is it will be remove by Zayrio. </em></p> 
+      <form method="POST" action="{{ url_for('submit_review', product_id=product.product_id) }}" class="mb-4">
+        <div class="mb-3">
+          <label for="review_text" class="form-label">Leave a Review</label>
+          <textarea class="form-control" name="review_text" id="review_text" rows="2" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="rating" class="form-label">Rating</label>
+          <select class="form-select" name="rating" id="rating" required>
+            <option value="">Select Rating</option>
+            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+            <option value="4">⭐⭐⭐⭐ (4)</option>
+            <option value="3">⭐⭐⭐ (3)</option>
+            <option value="2">⭐⭐ (2)</option>
+            <option value="1">⭐ (1)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary">Submit Review</button>
+      </form>
+      {% elif session.get('username') %}
+        <p class="text-muted"><em><i class="bi bi-shield-lock-fill me-2"></i>Terms and Conditions: You can only leave a review after purchasing the product.</em></p>
+
+      {% endif %}
+
+      {% if reviews %}
+        <ul class="list-group">
+          {% for review in reviews %}
+          <li class="list-group-item">
+            <strong>{{ review.fullname }}{% if review.fullname == session.get('fullname') %} (you){% endif %}
+                <i class="bi bi-patch-check-fill text-primary" title="Verified Purchase"></i> :
+            </strong> <small>Rating: {% for i in range(review.rating) %} ⭐ {% endfor %} {{ review.rating }}/5</small> <br>
+            
+            {{ review.text }}<br>
+          
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No reviews yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

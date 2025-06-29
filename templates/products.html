@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h4 class="text-center mb-4">
+    {% if search_mode %}
+      Search Results
+   {% else %}
+    All Products
+  {% endif %}
+  </h4>
+
+<div class="row">
+
+  {% if not search_mode %}
+
+  <!-- Sidebar: Filters -->
+  <div class="col-md-3 mb-4">
+    <form method="GET" action="" class="d-flex flex-column gap-3">
+
+      {% if request.args.get('source')  %}
+         <input type="hidden" name="source" value="{{ request.args.get('source') }}">
+      {% endif %}
+
+
+      {% if request.args.get('source') in ['hot_deals', 'hot_deals_main'] %}
+      {% if request.args.get('brand') %}
+        <input type="hidden" name="brand" value="{{ request.args.get('brand') }}">
+      {% endif %}
+
+      {% if request.args.get('discount') %}
+        <input type="hidden" name="discount" value="{{ request.args.get('discount') }}">
+      {% endif %}
+      {% endif %} 
+
+
+ <!-- Subcategory Filter -->
+<div class="card shadow-sm rounded-4">
+    <div class="card-header bg-dark text-white">
+    {% if category == 'Clothing' or category == 'Shoes & Bags' %}
+      Filter by Gender
+    {% elif category == 'Cosmetics' %}
+       Filter by Type
+    {% else %}
+      Filter by Products
+    {% endif %}
+  </div>
+
+  <div class="card-body">
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="subcategory" value="All" id="all"
+        {% if not selected_subcategory or selected_subcategory == 'All' %}checked{% endif %}>
+      <label class="form-check-label" for="all">All Products</label>
+    </div>
+
+    {% if category == 'Shoes & Bags' %}
+      <!-- Shoes Group -->
+      <div class="fw-bold mt-3">{% if request.args.get('source') != 'hot_deals_main' %} Shoes {% endif %} </div>
+      {% for sub in subcategories %}
+        {% if "Shoe" in sub %}
+          {% if request.args.get('source') != 'hot_deals_main' or sub in ['Mens Shoes', 'Womens Shoes'] %}
+          <div class="form-check mb-2 ms-3">
+            <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
+              {% if sub == selected_subcategory %}checked{% endif %}>
+            <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+          </div>
+           {% endif %}
+        {% endif %}
+      {% endfor %}
+
+
+      <!-- Bags Group -->
+      {% if request.args.get('source') != 'hot_deals_main' %}
+
+      <div class="fw-bold mt-3">Bags</div>
+      {% for sub in subcategories %}
+        {% if "Bag" in sub or "Clutch" in sub %}
+          <div class="form-check mb-2 ms-3">
+            <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
+              {% if sub == selected_subcategory %}checked{% endif %}>
+            <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+          </div>
+        {% endif %}
+      {% endfor %}
+     {% endif %}
+
+    {% else %}
+
+      <!-- Default subcategory rendering -->
+      
+      {% for sub in subcategories %}
+      {% if not (selected_brand in ['Levis', 'UNITED COLORS OF BENETTON'] and sub in ['Kids Girls', 'Kids Boys']) %}
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
+            {% if sub == selected_subcategory %}checked{% endif %}>
+          <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+
+    {% endif %}
+  </div>
+</div>
+
+
+    
+<!-- Brand Filter -->
+
+    {% if request.args.get('source') not in ['hot_deals', 'hot_deals_main'] %}
+
+    <div class="card shadow-sm rounded-4">
+      <div class="card-header bg-dark text-white">Filter by Brand</div>
+      <div class="card-body">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="brand" value="All" id="brand_all"
+            {% if not selected_brand or selected_brand == 'All' %}checked{% endif %}>
+          <label class="form-check-label" for="brand_all">All Brands</label>
+        </div>
+        {% for brand in brands %}
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="brand" value="{{ brand }}" id="{{ brand }}"
+            {% if brand == selected_brand %}checked{% endif %}>
+          <label class="form-check-label" for="{{ brand }}">{{ brand }}</label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% endif %}
+
+
+  <!-- Price Filter -->
+
+ 
+
+  <div class="card shadow-sm rounded-4 mb-4">
+    <div class="card-header bg-dark text-white">
+      Filter by Price
+  </div>
+
+  <div class="card-body">
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value="All"
+             id="price_all" {% if not selected_price or selected_price == 'All' %}checked{% endif %}>
+      <label class="form-check-label" for="price_all">All Prices</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value="<500"
+             id="price_500" {% if selected_price == '<500' %}checked{% endif %}>
+      <label class="form-check-label" for="price_500">Below ₹500</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value="500-1000"
+             id="price_500_1000" {% if selected_price == '500-1000' %}checked{% endif %}>
+      <label class="form-check-label" for="price_500_1000">₹500 - ₹1000</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value=">1000"
+             id="price_above_1000" {% if selected_price == '>1000' %}checked{% endif %}>
+      <label class="form-check-label" for="price_above_1000">Above ₹1000</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value=">10000"
+             id="price_above_10000" {% if selected_price == '>10000' %}checked{% endif %}>
+      <label class="form-check-label" for="price_above_1000">Above ₹10000</label>
+    </div>
+
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="price" value=">50000"
+             id="price_above_50000" {% if selected_price == '>50000' %}checked{% endif %}>
+      <label class="form-check-label" for="price_above_50000">Above ₹50000</label>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Discount Filter -->
+
+{% if request.args.get('source') not in ['hot_deals', 'hot_deals_main'] %}
+
+<div class="card shadow-sm rounded-4 mb-4">
+  <div class="card-header bg-dark text-white">
+    Filter by Discount
+  </div>
+  <div class="card-body">
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="discount" value="All"
+             id="discount_all" {% if not selected_discount or selected_discount == 'All' %}checked{% endif %}>
+      <label class="form-check-label" for="discount_all">All Discounts</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="discount" value="10+"
+             id="discount_10" {% if selected_discount == '10+' %}checked{% endif %}>
+      <label class="form-check-label" for="discount_10">10% or more</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="discount" value="25+"
+             id="discount_25" {% if selected_discount == '25+' %}checked{% endif %}>
+      <label class="form-check-label" for="discount_25">25% or more</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="discount" value="50+"
+             id="discount_50" {% if selected_discount == '50+' %}checked{% endif %}>
+      <label class="form-check-label" for="discount_50">50% or more</label>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+    <!-- Apply Button -->
+    <button type="submit" class="btn btn-outline-primary mt-2">Apply Filters</button>
+
+  </form>
+
+  {% endif %}
+
+</div>
+
+
+
+
+
+
+
+
+    <!-- Product Listing -->
+     
+      <div class="{% if search_mode %}col-12{% else %}col-md-9{% endif %}">
+      <div class="row">
+        
+        {% if not products %}
+          <div class="col-12">
+            <p class="text-center mt-4 text-danger fw-bold">
+              {% if search_mode %}
+                Sorry, no products found for your search.
+              {% else %}
+                Sorry, no products found for the selected filters.
+              {% endif %}
+            </p>
+          </div>
+        {% else %}
+          {% for product in products %}
+            <div class="col-sm-6 {% if search_mode %}col-md-4 col-lg-3{% else %}col-md-4 col-lg-4{% endif %} mb-4 d-flex align-items-stretch">
+              <div class="card shadow-sm rounded-4 w-100 p-2">
+                <a href="{{ url_for('product_summary', product_id=product.product_id) }}">
+                  <img src="{{ url_for('static', filename=product.image) }}"
+                      class="card-img-top rounded"
+                      style="height: 200px; object-fit: contain;"
+                      alt="{{ product.name }}">       
+                </a>
+                <div class="card-body p-2">
+                  <h6 class="card-title text-center"><strong>{{ product.brand }}</strong></h6>
+                  <h6 class="card-title text-center">{{ product.name }}</h6>
+                  <p class="card-text text-center mb-1">
+                    <del class="text-muted">₹{{ product.price }}</del>
+                    <span class="fw-bold text-success"> ₹{{ product.discount_price }}</span>
+                  </p>
+                  <p class="text-center text-success mb-2">{{ product.discount }}% OFF</p>
+                  {% if product.discount_price > 699%}
+                  <p class="text-center text-primary small">Free Delivery</p>
+                  {% else %}
+                  <p class="text-center text-primary small">Delivery: ₹80</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+      </div>
+
+      <!-- Pagination -->
+
+      {% if total_pages %}
+
+      <div class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination">
+
+            {% if page > 1 %}
+              <li class="page-item">
+                {% if search_mode %}
+                  <a class="page-link" href="{{ url_for('search', q=query, page=page-1) }}">Previous</a>
+                {% else %}
+                  <a class="page-link" href="{{ url_for('view_products', category=category, page=page-1, brand=selected_brand, subcategory=selected_subcategory, price=selected_price, discount=selected_discount, source=source) }}">Previous</a>
+                {% endif %}
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">Previous</span></li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+              {% if p == page %}
+                <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+              {% else %}
+                <li class="page-item">
+                  {% if search_mode %}
+                    <a class="page-link" href="{{ url_for('search', q=query, page=p) }}">{{ p }}</a>
+                  {% else %}
+                    <a class="page-link" href="{{ url_for('view_products', category=category, page=p, brand=selected_brand, subcategory=selected_subcategory, price=selected_price, discount=selected_discount, source=source) }}">{{ p }}</a>
+                  {% endif %}
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %}
+              <li class="page-item">
+                {% if search_mode %}
+                  <a class="page-link" href="{{ url_for('search', q=query, page=page+1) }}">Next</a>
+                {% else %}
+                  <a class="page-link" href="{{ url_for('view_products', category=category, page=page+1, brand=selected_brand, subcategory=selected_subcategory, price=selected_price, discount=selected_discount, source=source) }}">Next</a>
+                {% endif %}
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">Next</span></li>
+            {% endif %}
+
+          </ul>
+        </nav>
+      </div>
+
+      {% endif %}
+
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 d-flex flex-column align-items-center justify-content-center">
+
+  <!-- Confirmation Image -->
+  <img src="{{ url_for('static', filename='images/order_confirmed.png') }}"
+       alt="Order Confirmed"
+       class="img-fluid mb-4"
+       style="max-width: 400px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+
+  <!-- Thank You Message
+  <h2 class="text-success fw-bold mb-3 text-center">Thank You for Your Order!</h2>
+  <p class="text-muted text-center mb-4">Your order has been confirmed. We’ll notify you once it’s on the way.</p> -->
+
+  <!-- Continue Shopping Button -->
+  <a href="{{ url_for('index') }}"
+     class="btn btn-outline-success px-4 py-2 rounded-pill shadow-sm">
+    <i class="bi bi-cart-fill me-2"></i> Continue Shopping
+  </a>
+
+</div>
+{% endblock %}

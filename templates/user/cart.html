@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Your Cart</h2>
+
+  {% if cart_items|length == 0 %}
+    <div class="alert alert-warning">Your cart is empty.</div>
+  {% else %}
+    <div class="row">
+   {% for item in cart_items %}
+<div class="col-md-6 mb-4">
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-5">
+        <img src="{{ url_for('static', filename=item.image) }}" class="img-fluid rounded-start" style="height: 200px; object-fit: cover;">
+      </div>
+      <div class="col-md-7">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">Price: ₹{{ item.price }}</p>
+          <p class="card-text">Discount Price: ₹{{ item.discount_price }}</p>
+          <p class="card-text">Quantity: {{ item.quantity }}</p>
+
+          {% if item.product_type == "Clothing" and item.size %}
+                <p><strong>Selected Size:</strong> {{ item.size }}</p>
+          {% endif %}
+
+          <p class="card-text">Total Price: ₹{{ item.total_price }}</p>
+
+          <form action="{{ url_for('delete_from_cart', product_id=item['product_id']) }}" method="POST">
+               <button type="submit" class="btn btn-danger mt-2">Delete</button>
+          </form>
+
+          <form method="POST" action="{{ url_for('buy_now', product_id=item.product_id) }}">
+              <input type="hidden" name="quantity" value="{{ item.quantity }}">
+               <input type="hidden" name="size" value="{{ item.size }}">
+              <input type="hidden" name="source" value="cart_single">
+              <button type="submit" class="btn btn-success mt-2">Buy Now (COD)</button>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <h4 class="mb-4 text-center">Edit Product</h4>
+
+  <form method="POST" enctype="multipart/form-data" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Product Name</label>
+      <input type="text" name="name" value="{{ product.name }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Brand</label>
+      <input type="text" name="brand" value="{{ product.brand }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Description</label>
+      <textarea name="prod_description" class="form-control" required>{{ product.product_description }}</textarea>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Product Details</label>
+      <textarea name="prod_details" class="form-control" required>{{ product.product_details }}</textarea>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Product Type</label>
+      <input type="text" name="product_type" value="{{ product.product_type }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Category</label>
+      <input type="text" name="category" value="{{ product.category }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Subcategory</label>
+      <input type="text" name="subcategory" value="{{ product.subcategory }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Price</label>
+      <input type="number" name="price" value="{{ product.price }}" class="form-control" step="0.01" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Discount (%)</label>
+      <input type="number" name="discount" value="{{ product.discount }}" class="form-control" step="0.01" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Current Image</label><br>
+      <img src="{{ url_for('static', filename=product.image) }}" alt="Image" style="max-height:150px;">
+    </div>
+
+    <p>Existing Image path: {{ product.image }}</p>
+
+    <div class="col-md-6">
+      <label class="form-label">Change Image</label>
+      <input type="file" name="image" class="form-control">
+    </div>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-success">Update Product</button>
+      <a href="{{ url_for('manage_products') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

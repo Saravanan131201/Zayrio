@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4 fw-bold">
+    Admin <span class="text-primary">Dashboard</span>
+  </h2>
+  
+  <br><br>
+
+  <div class="row justify-content-center">
+    <!-- Admin Profile Card -->
+    <div class="col-md-3 mb-4">
+      <div class="card text-center shadow-lg border-0 rounded-4 h-100">
+        <div class="card-body">
+          
+          <img src="{{ url_for('static', filename='images/admin_profile.png') }}" class="rounded-circle mb-3" width="100" height="100" alt="Admin">
+          <h5 class="card-title">{{ admin_user.fullname }}</h5>
+          <p class="text-muted">Administrator</p>
+
+          Age: <p class="text-primary">{{ session.get('age') }}</p>
+          Gender: <p class="text-primary">{{ session.get('gender') }}</p>
+          Mobile No: <p class="text-primary">{{ session.get('phone') }}</p>
+          Company Email: <p class="text-primary">{{ session.get('email') }} <i class="bi bi-patch-check-fill text-success" title="Verified by Zayrio"></i></p>
+          Address: <p class="text-primary">{{ session.get('address') }}</p>
+          Logged in at: <p class="text-primary">{{ session.get('logged_in_at').strftime('%I:%M %p') }}</p>
+          Total Products Added: <p class="text-primary">{{ total_added_products }}</p>
+          Total Orders Updated: <p class="text-primary">{{ total_updated_orders }}</p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard Actions -->
+    <div class="col-md-9">
+      <div class="row g-4">
+
+        <!-- Show Users -->
+        <div class="col-12">
+          <a href="{{ url_for('show_users') }}" class="text-decoration-none">
+            <div class="card card-custom-blue text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-people-fill fs-3 mb-2"></i>
+                <h5 class="card-title">Show User Data</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Show Orders -->
+        <div class="col-12">
+          <a href="{{ url_for('show_orders') }}" class="text-decoration-none">
+            <div class="card bg-warning text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-card-checklist fs-3 mb-2"></i>
+                <h5 class="card-title">View and Update User Orders</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Add Products -->
+        <div class="col-12">
+          <a href="{{ url_for('add_products') }}" class="text-decoration-none">
+            <div class="card card-custom-green text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-plus-square-fill fs-3 mb-2"></i>
+                <h5 class="card-title">Add Products</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Manage Products -->
+        <div class="col-12">
+          <a href="{{ url_for('manage_products') }}" class="text-decoration-none">
+            <div class="card card-custom-purple text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-tools fs-3 mb-2"></i>
+                <h5 class="card-title">Manage Products</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- View Reviews -->
+        <div class="col-12">
+          <a href="{{ url_for('show_user_reviews') }}" class="text-decoration-none">
+            <div class="card card-custom-orange text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-tools fs-3 mb-2"></i>
+                <h5 class="card-title">View User Reviews</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- View Feedbacks -->
+        <div class="col-12">
+          <a href="{{ url_for('show_user_feedbacks') }}" class="text-decoration-none">
+            <div class="card card-custom-darksalmon text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-chat-square-dots fs-3 mb-2"></i>
+                <h5 class="card-title">View User Feedbacks</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.hover-effect:hover {
+  transform: translateY(-5px);
+  transition: 0.3s ease;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+</style>
+
+
+{% endblock %}

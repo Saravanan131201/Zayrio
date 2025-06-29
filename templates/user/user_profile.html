@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+   <h2 class="text-center mb-4 fw-bold">Your Dashboard</h2>
+   <br> 
+
+  <!-- <h2 class="text-center mb-4 fw-bold">
+    Welcome, <span class="text-primary">{{ session.get('fullname') }}</span>!
+  </h2> -->
+
+   <br>  <br> 
+
+  <div class="row justify-content-center">
+    <!-- Profile Card -->
+    <div class="col-md-3 mb-4">
+      <div class="card text-center shadow-lg border-0 rounded-4 h-100">
+
+         <!-- Edit Button -->
+          <a href="{{ url_for('edit_profile') }}" class="position-absolute top-0 end-0 m-2 text-decoration-none text-dark bg-light rounded-circle p-1" title="Edit Profile">
+          <i class="bi bi-pencil-square fs-5"></i>
+          </a>
+
+        <div class="card-body">
+
+          {% if session.get('gender') == 'Male' %}
+            <img src="{{ url_for('static', filename='images/male_profile.jpg') }}" class="rounded-circle mb-3" width="100" height="100" alt="Profile">
+          {% else %}
+            <img src="{{ url_for('static', filename='images/female_profile.jpg') }}" class="rounded-circle mb-3" width="100" height="100" alt="Profile">
+          {% endif %}
+
+          <h5 class="card-title">{{ session.get('fullname') }}</h5>
+          <p class="text-muted mb-0">Active User</p>
+          Age: <p class="text-primary">{{ session.get('age') }}</p>
+          Gender: <p class="text-primary">{{ session.get('gender') }}</p>
+          Mobile No: <p class="text-primary">{{ session.get('phone') }}</p>
+          Email: <p class="text-primary">{{ session.get('email') }}</p>
+          Address: <p class="text-primary">{{ session.get('address') }}</p>
+         
+          Total Orders: 
+          <p class="text-primary mb-1">
+            {{ total_orders }} <br>
+            <a href="#" class="ms-2 text-decoration-underline" data-bs-toggle="modal" data-bs-target="#orderStatsModal">
+              View More Details
+            </a>
+              {% include 'modals/order_stats_modal.html' %}
+          </p>
+
+          Logged in at: <p class="text-primary">{{ session.get('logged_in_at').strftime('%I:%M %p') }}</p>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="col-md-9">
+      <div class="row g-4">
+
+        <!-- Continue Shopping -->
+        <div class="col-12">
+          <a href="{{ url_for('index') }}" class="text-decoration-none">
+            <div class="card card-custom-green text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-shop-window fs-3 mb-2"></i>
+                <h5 class="card-title">Continue Shopping</h5>
+              </div>
+            </div>
+          </a>
+        </div> 
+
+        
+        <!-- Orders -->
+        <div class="col-12">
+          <a href="{{ url_for('view_user_orders') }}" class="text-decoration-none">
+            <div class="card card-custom-purple text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-box-seam fs-3 mb-2"></i>
+                <h5 class="card-title">View and Track Orders</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        
+
+        <!-- Wishlist -->
+        <div class="col-12">
+          <a href="{{ url_for('view_wishlist') }}" class="text-decoration-none">
+            <div class="card bg-warning text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-heart-fill fs-3 mb-2"></i>
+                <h5 class="card-title">View Wishlist</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- View Cart -->
+        <div class="col-12">
+          <a href="{{ url_for('view_cart') }}" class="text-decoration-none">
+            <div class="card card-custom-blue text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-cart-fill fs-3 mb-2"></i>
+                <h5 class="card-title">View Cart</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        
+        <!-- Feedbacks -->
+        <div class="col-12">
+          <a href="{{ url_for('submit_feedback') }}" class="text-decoration-none">
+            <div class="card card-custom-orange text-white text-center shadow-sm rounded-4 h-100 hover-effect">
+              <div class="card-body p-4">
+                <i class="bi bi-chat-square-dots fs-3 mb-2"></i>
+                <h5 class="card-title">Leave Feedbacks</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.hover-effect:hover {
+  transform: translateY(-5px);
+  transition: 0.3s;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+</style>
+
+
+{% endblock %}

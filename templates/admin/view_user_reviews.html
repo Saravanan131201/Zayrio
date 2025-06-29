@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">All Reviews</h1>
+
+  {% if all_reviews %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    {% for review in all_reviews %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <a href="{{ url_for('product_summary', product_id=review.product_id) }}">
+          <img src="{{ url_for('static', filename=review.product_image) }}" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: contain;">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ review.product_name }}</h5>
+          <p class="card-subtitle text-muted mb-2">Product ID: {{ review.product_id }}</p>
+          <p class="mb-2"><strong>Reviewer:</strong> {{ review.fullname }}</p>
+          <p class="mb-2"><strong>Review:</strong> {{ review.text }}</p>
+          <div class="d-flex align-items-center">
+            <strong>Rating:</strong>&nbsp;
+            <div class="ms-2">
+              {% for i in range(review.rating) %}
+                ⭐
+              {% endfor %}
+              ({{ review.rating }}/5)
+            </div>
+          </div>
+        </div>
+
+          <div class="card-footer text-end bg-white border-0">
+            <form action="{{ url_for('delete_review', review_id = review.review_id) }}" method="POST">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </div>
+
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+  {% else %}
+    <p class="text-muted text-center"><em>No Reviews yet</em></p>
+  {% endif %}
+
+</div>
+
+{% endblock %}

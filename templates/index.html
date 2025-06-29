@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container mt-4">
+  <br> 
+
+<!-- Carousel Section -->
+<div id="mainCarousel" class="carousel slide mb-5 shadow-lg rounded-4 overflow-hidden" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <a href="{{ url_for('view_products', category='Womens Wear') }}" class="text-decoration-none">
+      <div class="carousel-item active">
+        <img src="{{ url_for('static', filename='images/banners/banner_1.png') }}" class="d-block w-100 carousel-image" alt="Banner 1">
+      </div>
+    </a>
+
+    <a href="{{ url_for('view_products', category='Clothing') }}?source=main" class="text-decoration-none">
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/banners/banner_2.png') }}" class="d-block w-100 carousel-image" alt="Banner 2">
+      </div>
+    </a>
+
+    <a href="{{ url_for('view_products', category='Watches') }}" class="text-decoration-none">
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/banners/banner_3.png') }}" class="d-block w-100 carousel-image" alt="Banner 3">
+      </div>
+    </a>
+
+    <a href="{{ url_for('view_products', category='Cosmetics') }}?source=main" class="text-decoration-none">
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/banners/banner_4.png') }}" class="d-block w-100 carousel-image" alt="Banner 4">
+      </div>
+    </a>
+
+    <a href="{{ url_for('view_products', category='Shoes & Bags') }}?source=main" class="text-decoration-none">
+      <div class="carousel-item">
+        <img src="{{ url_for('static', filename='images/banners/banner_5.png') }}" class="d-block w-100 carousel-image" alt="Banner 5">
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Carousel Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+  <!-- Carousel Indicators -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+</div>
+
+
+<br>
+
+
+<!-- Hot Deals Slider -->
+<div class="slider-container">
+   <h3 class="mb-4 text-start">
+  🔥 <span class="underline-title">Hot Deals</span>
+  </h3>
+
+  <button class="slider-btn prev-btn">&#8592;</button>
+  <div class="slider-track">
+    <!-- Each slide -->
+      <div class="container mt-5 mb-4">
+
+      <div class="hot-deals-slider">
+        <div class="slider-track">
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Clothing', brand='U.S. POLO ASSN.', discount='50+', source='hot_deals_main') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_01.jpg') }}" class="img-fluid" alt="Deal 1">
+        </a>
+      </div>
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Womens Wear', brand='BIBA', discount='50+', source='hot_deals') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_02.jpg') }}" class="img-fluid" alt="Deal 2">
+        </a>
+      </div>
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Clothing', brand='Levis', discount='50+', source='hot_deals_main') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_03.jpg') }}" class="img-fluid" alt="Deal 3">
+        </a>
+      </div>
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Clothing', brand='UNITED COLORS OF BENETTON', discount='50+', source='hot_deals_main') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_04.jpg') }}" class="img-fluid" alt="Deal 4">
+        </a>
+      </div>  
+
+      <!-- <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Womens Wear', brand='ONLY', discount='25+', source='hot_deals') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_05.jpg') }}" class="img-fluid" alt="Deal 5">
+        </a>
+      </div> -->
+
+      <!-- <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Mens Wear', brand='Fahrenheit', discount='25+', source='hot_deals') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_06.jpg') }}" class="img-fluid" alt="Deal 6">
+        </a>
+      </div> -->
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Kids Girls', brand='PEPPERMINT', discount='50+', source='hot_deals') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_07.jpg') }}" class="img-fluid" alt="Deal 7">
+        </a>
+      </div>
+
+      <div class="slide-item">
+        <a href="{{ url_for('view_products', category='Shoes & Bags', brand='SKECHERS', discount='50+', source='hot_deals_main') }}">
+          <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_08.jpg') }}" class="img-fluid" alt="Deal 8">
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+  <button class="slider-btn next-btn">&#8594;</button>
+</div>
+
+
+
+
+<br><br><br>
+
+
+<!-- TOP CATEGORIES CONTENTS GOES HERE -->
+<div class="container-fluid mt-4">
+
+  <h2 class="fw-bold mb-4 text-start">
+    <i class="bi bi-tags-fill me-2"></i>
+    <span class="underline-title">Top Categories</span>
+  </h2>
+  <br>
+
+  <div class="row mt-4">
+
+    <!-- Sidebar -->
+    <div class="col-md-2">
+      <div class="sidebar rounded-3 p-2">
+        <div class="nav flex-column nav-pills" id="categoryTabs" role="tablist">
+          {% for category in ['Men', 'Women', 'Kids', 'Shoes', 'Glam'] %}
+            <button class="category-tab nav-link {% if loop.index == 1 %}active{% endif %}" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#tab-{{ loop.index }}" 
+                    type="button" 
+                    role="tab">
+              {{ category }}
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="col-md-10">
+      <div class="tab-content">
+        {% for category, items in {
+          'Mens Wear': ['Casual Shirts', 'Formal Shirts', 'Hoodies & Sweatshirts', 'Jackets', 'Jeans', 'T - Shirts'],
+          'Womens Wear': ['Tops & Tunics','Saree', 'Kurta set', 'Jeans & Jeggings', 'Jumpsuits', 'Pants & Palazzos'],
+          
+          'Kids': {
+            'Kids Boys': ['Ethnic Wear', 'Trackpants & Joggers', 'Shorts'],
+            'Kids Girls': ['Tops & Tees', 'Jeans & Joggers', 'Infant Basic & Sets']
+          },
+
+          'Shoes': {
+            'Mens Shoes' : ['Formal Shoes', 'Sneakers', 'Sports Shoes', 'Flip Flop & Sliders'],
+            'Womens Shoes' : ['Flat Sandals', 'Heel Sandals', 'Flat Casual Shoes', 'Ballerinas']
+          },
+
+          'Makeup': ['Lipsticks & Lipbalms', 'Sets & Palettes', 'Foundation', 'Eyeliner & Kajal'],
+        }.items() %}
+
+          <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="tab-{{ loop.index }}" role="tabpanel">
+            <h5 class="fw-bold mb-3">{{ category }}</h5>
+
+            {% if category == 'Kids' or category == 'Shoes' %}
+              {% for subcategory, subitems in items.items() %}
+                <h6 class="fw-semibold mt-3 mb-2">{{ subcategory.replace('Kids ', '') }} </h6>
+                <div class="row g-4 mb-4">
+                  {% for item in subitems %}
+                    <div class="col-md-3 col-6 category-card text-center">
+                      <a href="{{ url_for('view_products', category=subcategory, subcategory=item) }}" class="text-decoration-none text-dark">
+                        <img 
+                          src="{{ url_for('static', filename='images/top_categories/' + item + '.jpg') }}" 
+                          alt="{{ item }}"
+                          class="category-img"
+                        >
+                        <div class="mt-2 fw-semibold">{{ item }}</div>
+                      </a>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+
+            {% else %}
+              <div class="row g-4">
+                {% for item in items %}
+                  <div class="col-md-3 col-6 category-card text-center">
+                    <a href="{{ url_for('view_products', category=category, subcategory=item) }}" class="text-decoration-none text-dark">
+                      <img 
+                        src="{{ url_for('static', filename='images/top_categories/' + item + '.jpg') }}" 
+                        alt="{{ item }}"
+                        class="category-img"
+                      >
+                      <div class="mt-2 fw-semibold">{{ item }}</div>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <br><br><br>
+
+
+<!-- Top Selling Mobile Phones -->
+<div class="top-selling-container my-5">
+  <h3 class="mb-4 text-start d-flex align-items-center gap-2">
+    <div style="font-size: 2rem;">📱</div><span class="underline-title">Top Selling Mobile Phones</span>
+  </h3>
+
+  <div class="top-selling-row d-flex flex-wrap justify-content-start gap-4">
+    <!-- iPhone -->
+    <div class="top-item text-center">
+      <a href="{{ url_for('view_products', category='Smart Phones', subcategory='Apple iPhone 16 Series', brand = 'Apple') }}">
+        <img src="{{ url_for('static', filename='images/top_mobile_phones/iPhone_banner.png') }}" alt="iPhone 16" class="img-fluid">
+      </a>
+      <div class="mt-2">
+        <h6 class="fw-bold mb-1">iPhone 16 Series</h6>
+        <p class="text-muted small">Now with A18 Bionic Chip. Pre-book now!</p>
+      </div>
+    </div>
+
+    <!-- Samsung -->
+    <div class="top-item text-center">
+      <a href="{{ url_for('view_products', category='Smart Phones', subcategory='Samsung Galaxy - S Series', brand = 'Samsung') }}">
+        <img src="{{ url_for('static', filename='images/top_mobile_phones/samsung_series.png') }}" alt="Samsung S Series" class="img-fluid">
+      </a>
+      <div class="mt-2">
+        <h6 class="fw-bold mb-1">Samsung Galaxy S Series</h6>
+        <p class="text-muted small">Epic camera & display. Grab offers now!</p>
+      </div>
+    </div>
+
+    <!-- OnePlus -->
+    <div class="top-item text-center">
+      <a href="{{ url_for('view_products', category = 'Smart Phones', subcategory = 'One Plus 13 Series', brand = 'One Plus') }}">
+        <img src="{{ url_for('static', filename='images/top_mobile_phones/one_plus.png') }}" alt="OnePlus 13" class="img-fluid">
+      </a>
+      <div class="mt-2">
+        <h6 class="fw-bold mb-1">OnePlus 13 Series</h6>
+        <p class="text-muted small">Performance meets design. Starting ₹40,000.</p>
+      </div>
+    </div>
+
+    <!-- Xiaomi -->
+    <div class="top-item text-center">
+      <a href="{{ url_for('view_products', category='Smart Phones', subcategory = 'Xiaomi 14 & 15 Series', brand = 'Xiaomi ') }}">
+        <img src="{{ url_for('static', filename='images/top_mobile_phones/xioami_series.png') }}" alt="Xiaomi Series" class="img-fluid">
+      </a>
+      <div class="mt-2">
+        <h6 class="fw-bold mb-1">Xiaomi Series</h6>
+        <p class="text-muted small">Budget killer with 120Hz AMOLED screen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<br><br><br><br><br>
+
+
+
+          <!-- TESTIMONIALS / FEEDBACKS SECTION -->
+
+        
+          <h3 class="fw-bold mb-4 text-start">
+            💬 <span class="underline-title">Customer Feedbacks</span>
+          </h3>
+
+          {% if all_feedbacks %}
+
+          <div class="testimonial-container position-relative">
+            <button class="testimonial-prev-btn slider-btn">&#8592;</button>
+
+            <div class="testimonial-slider-track d-flex overflow-hidden">
+              {% for feedback in all_feedbacks %}
+              <div class="testimonial-item card shadow p-4 m-3 flex-shrink-0">
+                <div class="quote-symbol display-4 text-primary"><span>❝</span></div>
+                <small>{% for i in range(feedback.rating) %} ⭐ {% endfor %} {{ feedback.rating }}/5</small>
+                <p class="testimonial-text mt-2">"{{ feedback.text }}"</p>
+                <h6 class="text-muted text-end mt-4">- {{ feedback.fullname }} 
+                    <i class="bi bi-patch-check-fill text-primary" title="Verified Purchase"></i>
+                </h6>
+              </div>
+              {% endfor %}
+            </div>
+
+            <button class="testimonial-next-btn slider-btn">&#8594;</button>
+          </div>
+
+          {% else %}
+            <p class="text-muted text-center"><em>No Feedbacks Yet</em></p>
+
+          {% endif %}
+
+
+  <!-- Our Benefits Section -->
+
+<div class="container my-5">
+  <h4 class="fw-bold mb-4">
+    <i class="bi bi-gift-fill" style="font-size: 1.5rem;"></i>
+    <span class="underline-title">Our Benefits</span>
+  </h4>
+
+  <div class="row g-3 justify-content-center">
+    <!-- Free Shipping -->
+    <div class="col-md-4 col-sm-6">
+      <img src="{{ url_for('static', filename='images/benefits/free_shipping.jpg') }}" alt="Free Shipping" class="img-fluid rounded-3 shadow-sm w-100">
+    </div>
+
+    <!-- Returns & Exchange -->
+    <div class="col-md-4 col-sm-6">
+      <img src="{{ url_for('static', filename='images/benefits/returns_exchange.jpg') }}" alt="Returns & Exchange" class="img-fluid rounded-3 shadow-sm w-100">
+    </div>
+
+    <!-- Collect & Return -->
+    <div class="col-md-4 col-sm-6">
+      <img src="{{ url_for('static', filename='images/benefits/collect_return.jpg') }}" alt="Collect & Return" class="img-fluid rounded-3 shadow-sm w-100">
+    </div>
+  </div>
+</div>
+
+
+
+
+  
+</div>
+{% endblock %}

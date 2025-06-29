@@ -1,0 +1,46 @@
+<div class="modal fade" id="cancelModal{{ order.order_id }}" tabindex="-1" aria-labelledby="cancelModalLabel{{ order.order_id }}" aria-hidden="true">
+            <div class="modal-dialog">
+              <form method="POST" action="{{ url_for('cancel_order', order_id=order.order_id) }}">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel{{ order.order_id }}">Cancel Order #{{ order.order_id }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                    <p>Please select the reason(s) for cancellation:</p>
+
+                    <div class="form-check-inline">
+                      <input class="form-check-input text-center" type="checkbox" name="reason[]" value="Ordered by mistake" id="reason1_{{ order.order_id }}">
+                      <label class="form-check-label" for="reason1_{{ order.order_id }}">Ordered by mistake</label>
+                    </div>
+
+                    <br>
+
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="reason[]" value="Found a better price" id="reason2_{{ order.order_id }}">
+                      <label class="form-check-label" for="reason2_{{ order.order_id }}">Found a better price</label>
+                    </div>
+                    
+                    <br>
+                    
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="reason[]" value="Delivery is too late" id="reason3_{{ order.order_id }}">
+                      <label class="form-check-label" for="reason3_{{ order.order_id }}">Delivery is too late</label>
+                    </div>
+                    
+                    <br>
+
+                    <div class="form-check-inline">
+                      <input class="form-check-input" type="checkbox" name="reason[]" value="Other" id="reason4_{{ order.order_id }}">
+                      <label class="form-check-label" for="reason4_{{ order.order_id }}">Other</label>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Confirm Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>

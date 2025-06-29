@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Your Tracked Order</h1> <br>
+
+  {% if tracked_order %}
+  <div class="row g-4">
+    {% for order in tracked_order %}
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto d-flex justify-content-center">
+       <div class="card h-100 shadow-sm border-0 w-100" style="max-width: 500px;">
+
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <span class="fw-bold text-dark">Order ID: {{ order.order_id }}</span>
+          <small class="text-muted">{{ order.ordered_at.strftime('%d-%m-%Y at %I:%M %p') }}</small>
+        </div>
+
+        <a href="{{ url_for('product_summary', product_id=order.product_id) }}">
+          <img src="{{ url_for('static', filename=order.image) }}" class="card-img-top" alt="Product Image" style="object-fit: contain; height: 200px;">
+        </a>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ order.name.split(':')[0].split('|')[0].split(',')[0].strip() }}</h5>
+          
+          <p><strong>Product ID:</strong> {{ order.product_id }}</p>
+
+
+              {% if order.product_type == "Clothing" %}
+                {% if order.exchange_new_size %}
+                 <p><strong>New Size: </strong> {{ order.exchange_new_size }} </p>
+                {% elif order.size %}
+                  <p><strong> Size: </strong> {{ order.size }}</p>
+                {% endif %}
+              
+              {% endif %}
+
+
+          <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+          <p><strong>User ID:</strong> {{ order.user_id }}</p>
+          <p><strong>Ordered By:</strong> {{ order.fullname }}</p>
+          <p><strong>Phone:</strong> {{ order.phone }}</p>
+          <p><strong>Address:</strong> {{ order.address }}</p>
+          <p><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+        </div>
+
+        <div class="card-footer bg-white">
+          <div class="mb-2">
+            <strong>Status:</strong>
+            {% if order.status == "Delivered" %}
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-2"></i>Delivered</span>
+            {% elif order.status in ["Returned", "Exchanged"] %}
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-2"></i>{{ order.status }}</span>
+            {% elif order.status == "In Progress" %}
+              <span class="text-warning fw-bold"><i class="bi bi-arrow-repeat"></i> In Progress</span>
+            {% elif order.status == "Cancelled" %}
+              <span class="text-danger fw-bold"><i class="bi bi-x-circle-fill"></i> Cancelled</span>
+            {% elif order.status == "Return Inprogress" %}
+              <span class="text-warning fw-bold"><i class="bi bi-arrow-repeat"></i> Return In Progress</span>
+            {% elif order.status == "Exchange Inprogress" %}
+              <span class="text-warning fw-bold"><i class="bi bi-arrow-repeat"></i> Exchange In Progress</span>
+            {% elif order.status == "Return Cancelled" %}
+              <span class="text-danger fw-bold"><i class="bi bi-x-circle-fill"></i> Return Cancelled</span><br>
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-2"></i> Product Delivered</span>
+            {% elif order.status == "Exchange Cancelled" %}
+              <span class="text-danger fw-bold"><i class="bi bi-x-circle-fill"></i> Exchange Cancelled</span><br>
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-2"></i> Product Delivered</span>
+            {% else %}
+              <span class="custom-orange fw-bold"><i class="bi bi-hourglass-split"></i> Delayed</span>
+            {% endif %}
+          </div>
+
+          <div class="mb-2">
+            <strong>Delivery Info:</strong><br>
+            {% if order.status == "Delivered" %}
+              <span class="text-success fw-bold">Delivered on: {{ order.delivered_at.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Cancelled" %}
+              <span class="text-danger fw-bold">Cancelled on {{ order.cancelled_at.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Returned" %}
+              <span class="text-success fw-bold">Refunded on {{ order.return_money_on.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Exchanged" %}
+              <span class="text-success fw-bold">Exchanged on {{ order.exchange_delivered_on.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Return Inprogress" %}
+              <span class="text-warning fw-bold">Refund expected by {{ order.return_money_on.strftime('%d-%m-%Y before %I:%M %p') }}</span>
+            {% elif order.status == "Exchange Inprogress" %}
+              <span class="text-warning fw-bold">Expected by {{ order.exchange_delivered_on.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Return Cancelled" %}
+              <span class="text-warning fw-bold">Return Cancelled on {{ order.return_cancelled_on.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% elif order.status == "Exchange Cancelled" %}
+              <span class="text-danger fw-bold">Exchange Cancelled on {{ order.exchange_cancelled_on.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% else %}
+              <span class="text-warning fw-bold">Expected by {{ order.delivered_at.strftime('%d-%m-%Y at %I:%M %p') }}</span>
+            {% endif %}
+          </div>
+
+          <div class="d-grid gap-2">
+            {% if order.status == "In Progress" or order.status == "Delayed" %}
+              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelModal{{ order.order_id }}">Cancel Order</button>
+
+            {% elif order.status == "Return Inprogress" and (datetime.now() - order.return_requested_at).days <= 3 %}
+               <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelReturnModal{{ order.order_id }}">Cancel Return</button>
+                  {% include 'modals/cancel_return_modal.html' %}
+
+            {% elif order.status == "Exchange Inprogress" and (datetime.now() - order.exchange_requested_at).days <= 3 %}
+               <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelExchangeModal{{ order.order_id }}">Cancel Exchange</button>
+                    {% include 'modals/cancel_exchange_modal.html' %}
+
+            {% elif order.status == "Delivered" and (datetime.now() - order.delivered_at).days <= 7 %}
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#returnModal{{ order.order_id }}">Return</button>
+              <button class="btn btn-outline-secondary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#exchangeModal{{ order.order_id }}">Exchange</button>
+
+            {% else %}
+              <p class="text-muted text-center">No more actions</p>
+            {% endif %}
+          </div>
+        </div>
+
+        {% include 'modals/cancel_modal.html' %}
+        {% include 'modals/return_modal.html' %}
+        {% include 'modals/exchange_modal.html' %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+    <p class="text-muted text-center"><em>No Orders Tracked Yet</em></p>
+  {% endif %}
+
+  <!-- Back Button -->
+  <div class="text-center mt-5">
+    <a href="{{ url_for('view_user_orders') }}" class="btn btn-primary">← Back to My Orders</a>
+  </div>
+
+</div>
+
+{% endblock %}

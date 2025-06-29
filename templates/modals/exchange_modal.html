@@ -1,0 +1,84 @@
+<div class="modal fade" id="exchangeModal{{ order.order_id }}" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="{{ url_for('exchange_order', order_id=order.order_id) }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Exchange Order #{{ order.order_id }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label class="mb-2">Reason for Exchange:</label><br>
+
+          {% if order.product_type == "Clothing" %}
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Size doesn't fit">
+            <label class="form-check-label">Size doesn't fit</label>
+          </div>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Ordered Wrong Size by mistake">
+            <label class="form-check-label">Ordered Wrong Size by mistake</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Received Wrong size">
+            <label class="form-check-label">Received Wrong Size</label>
+          </div>
+
+          <br>
+
+          {% endif %}
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Received wrong item">
+            <label class="form-check-label">Received Wrong item</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Product looks different from photo">
+            <label class="form-check-label">Product looks different from photo</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Product color is different">
+            <label class="form-check-label">Product color is different</label>
+          </div>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value=">Ordered wrong color by mistake">
+            <label class="form-check-label">>Ordered wrong color by mistake</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Product damaged">
+            <label class="form-check-label">Product damaged</label>
+          </div>
+
+          <br>
+
+          {% if order.product_type == "Clothing" %}
+          <label class="mt-3" for="new_size">Select New Size:</label>
+          <select name="new_size" class="form-select" required>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+          {% endif %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Submit Exchange</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

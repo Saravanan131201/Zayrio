@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Your Orders History</h1>
+
+  {% if my_orders %}
+  
+  <!-- Track Your Order Form -->
+  <div class="container mt-5 d-flex justify-content-center">
+    <form method="POST" action="{{ url_for('track_my_order') }}" class="d-flex align-items-center gap-2">
+      <label for="track_order_id" class="form-label mb-0">Enter Order ID:</label>
+      <input type="text" id="track_order_id" name="order_id" class="form-control" style="width: 200px;" required>
+      <button type="submit" class="btn btn-primary">Track</button>
+    </form>
+  </div>
+
+  <div class="row mt-5 g-4">
+    {% for order in my_orders %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100 border-0">
+        <div class="card-header bg-light d-flex align-items-center justify-content-between">
+          <div>
+            {% if order.status in ['Delivered', 'Exchanged', 'Returned', 'Exchange Cancelled', 'Return Cancelled'] %}
+              <span class="text-success fw-bold"><i class="bi bi-patch-check-fill me-1"></i> {{ order.order_id }}</span>
+            {% elif order.status in ['In Progress', 'Return Inprogress', 'Exchange Inprogress'] %}
+              <span class="text-warning fw-bold"><i class="bi bi-arrow-repeat me-1"></i> {{ order.order_id }}</span>
+            {% elif order.status == 'Cancelled' %}
+              <span class="text-danger fw-bold"><i class="bi bi-x-circle-fill me-1"></i> {{ order.order_id }}</span>
+            {% else %}
+              <span class="custom-orange fw-bold"><i class="bi bi-hourglass-split me-1"></i> {{ order.order_id }}</span>
+            {% endif %}
+          </div>
+          <small class="text-muted">{{ order.ordered_at.strftime('%d-%m-%Y at %I:%M %p') }}</small>
+        </div>
+
+        <a href="{{ url_for('product_summary', product_id= order.product_id) }}">
+          <img src="{{ url_for('static', filename=order.image) }}" class="card-img-top" style="object-fit: contain; height: 200px;" alt="Product Image">
+        </a>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ order.name }}</h5>
+          
+              {% if order.product_type == "Clothing" %}
+                {% if order.exchange_new_size %}
+                 <p><strong>New Size: </strong> {{ order.exchange_new_size }} </p>
+                {% elif order.size %}
+                  <p><strong> Size: </strong> {{ order.size }}</p>
+                {% endif %}
+              
+              {% endif %}
+
+          <p class="mb-1"><strong>Quantity:</strong> {{ order.quantity }}</p>
+          <p class="mb-1"><strong>Total Price:</strong> ₹{{ order.total_price }}</p>
+        </div>
+
+        <div class="card-footer bg-white">
+          <p class="mb-1"><strong>Phone:</strong> {{ order.phone }}</p>
+          <p class="mb-0"><strong>Address:</strong> {{ order.address }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+    <p class="text-muted text-center"><em>No Orders Yet</em></p>
+  {% endif %}
+
+  <!-- Back Button -->
+  <div class="text-center mt-5">
+    <a href="{{ url_for('user_profile') }}" class="btn btn-primary">← Back to Dashboard</a>
+  </div>
+
+</div>
+
+{% endblock %}

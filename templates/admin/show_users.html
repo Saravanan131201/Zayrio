@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">All Users</h1>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for user in all_users %}
+    <div class="col">
+      <div class="card shadow h-100 border-0">
+
+        <!-- Profile Picture -->
+        <div class="text-center pt-4">
+          {% if user.gender == 'Male' %}
+            <img src="{{ url_for('static', filename='images/male_profile.jpg') }}" class="rounded-circle shadow-sm" alt="Male Avatar" width="100" height="100">
+          {% elif user.gender == 'Female' %}
+            <img src="{{ url_for('static', filename='images/female_profile.jpg') }}" class="rounded-circle shadow-sm" alt="Female Avatar" width="100" height="100">
+          {% endif %}
+        </div>
+
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ user.fullname }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+        </div>
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>User ID:</strong> {{ user.user_id }}</li>
+          <li class="list-group-item"><strong>Gender:</strong> {{ user.gender }}</li>
+          <li class="list-group-item"><strong>Phone:</strong> {{ user.phone }}</li>
+          <li class="list-group-item"><strong>Address:</strong> {{ user.address }}</li>
+          <li class="list-group-item"><strong>Age:</strong> {{ user.age }}</li>
+          <li class="list-group-item"><strong>DOB:</strong> {{ user.dob }}</li>
+          <li class="list-group-item"><strong>Created On:</strong> {{ user.created_at.strftime('%d-%m-%Y at %I:%M:%S %p') }}</li>
+        </ul>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

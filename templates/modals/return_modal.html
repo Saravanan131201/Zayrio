@@ -1,0 +1,65 @@
+<div class="modal fade" id="returnModal{{ order.order_id }}" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="{{ url_for('return_order', order_id=order.order_id) }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Return Order #{{ order.order_id }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        
+        <div class="modal-body">
+          <p>Please select the reason(s) for return:</p>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason[]" value="Product damaged" id="reason1_{{ order.order_id }}">
+            <label class="form-check-label" for="reason1_{{ order.order_id }}">Product damaged</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Ordered wrong color by mistake">
+            <label class="form-check-label">Ordered wrong color by mistake</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason" value="Ordered Wrong Size by mistake">
+            <label class="form-check-label">Ordered Wrong Size by mistake</label>
+          </div>
+
+          <div class="form-check-inline">
+            <input class="form-check-input " type="checkbox" name="reason[]" value="Item not as described" id="reason2_{{ order.order_id }}">
+            <label class="form-check-label" for="reason2_{{ order.order_id }}">Item not as described</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason[]" value="Wrong item delivered" id="reason3_{{ order.order_id }}">
+            <label class="form-check-label" for="reason3_{{ order.order_id }}">Wrong item delivered</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason[]" value="Not satisfied with product" id="reason4_{{ order.order_id }}">
+            <label class="form-check-label" for="reason4_{{ order.order_id }}">Not satisfied with product</label>
+          </div>
+
+          <br>
+
+          <div class="form-check-inline">
+            <input class="form-check-input" type="checkbox" name="reason[]" value="Product looks different from photo" id="reason5_{{ order.order_id }}">
+            <label class="form-check-label" for="reason5_{{ order.order_id }}">Product looks different from photo</label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Submit Return</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+
+<div class="modal fade" id="orderStatsModal" tabindex="-1" aria-labelledby="orderStatsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderStatsModalLabel">Order History Summary</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush fs-6">
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total Orders</span> <span class="fw-bold text-primary">{{ total_orders }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Delivered</span> <span class="fw-bold text-success">{{ delivered }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>In Progress</span> <span class="fw-bold text-warning">{{ inprogress }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Returned</span> <span class="fw-bold text-info">{{ returned }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Exchanged</span> <span class="fw-bold text-info">{{ exchanged }}</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Cancelled</span> <span class="fw-bold text-danger">{{ cancelled }}</span>
+          </li>
+          
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Delayed</span> <span class="fw-bold text-warning">{{ delayed }}</span>
+          </li>
+
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

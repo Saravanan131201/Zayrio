@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">All Feedbacks</h1>
+
+  {% if all_feedbacks %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for feedback in all_feedbacks %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ feedback.fullname }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ feedback.email }}</h6>
+            <p class="card-text mb-1"><strong>Phone:</strong> {{ feedback.phone }}</p>
+            <p class="card-text mb-1"><strong>Address:</strong> {{ feedback.address }}</p>
+            <p class="card-text mb-1"><strong>Total Orders:</strong> {{ feedback.order_count }}</p>
+            <p class="card-text"><strong>Feedback:</strong> {{ feedback.text }}</p>
+            <p class="card-text">
+              <strong>Rating:</strong> 
+              {% for i in range(feedback.rating) %} ⭐ {% endfor %} {{ feedback.rating }}/5
+            </p>
+          </div>
+          <div class="card-footer text-end bg-white border-0">
+            <form action="{{ url_for('delete_feedback', feedback_id = feedback.feedback_id) }}" method="POST">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted text-center"><em>No Feedbacks yet</em></p>
+  {% endif %}
+
+</div>
+
+{% endblock %}
