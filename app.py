@@ -5,6 +5,7 @@ from datetime import timedelta
 from db import users, products, cart, orders, wishlist, reviews, feedbacks
 from auth import login_required
 from statistics import mean
+import pytz
 import uuid
 import os
 
@@ -14,6 +15,8 @@ app.secret_key = "secret-key"
 bcrypt = Bcrypt(app)
 
 reset_tokens = {}
+
+ist = pytz.timezone('Asia/Kolkata')
 
 folder_name = 'static/images'
 os.makedirs(folder_name, exist_ok=True)
@@ -95,7 +98,7 @@ def login():
             session["phone"] = user["phone"]
             session["dob"] = user["dob"]
             session["address"] = user["address"]
-            session["logged_in_at"] = datetime.now()
+            session["logged_in_at"] = datetime.now(ist)
             session["role"] = user["role"]
 
             flash("You've Successfully Loggged In", 'success')
@@ -651,7 +654,7 @@ def cancel_order(order_id):
                 {"order_id": order_id},
                 {"$set": {"status": "Cancelled", 
                           "cancel_reason": reason_text,
-                          "cancelled_at" : datetime.now()
+                          "cancelled_at" : datetime.now(ist)
                           }}
             )
         
@@ -666,7 +669,7 @@ def cancel_order(order_id):
 def return_order(order_id):
     reasons = request.form.getlist("reason[]")
     reason_text = ', '.join(reasons) if reasons else "No reason provided"
-    return_requested_at = datetime.now()
+    return_requested_at = datetime.now(ist)
 
     orders.update_one(
         {"order_id": order_id, "user_id": session["user_id"]},
@@ -687,7 +690,7 @@ def return_order(order_id):
 def exchange_order(order_id):
     reason_list = request.form.getlist('reason')  
     combined_reason = ", ".join(reason_list)   
-    exchange_requested_at = datetime.now()   
+    exchange_requested_at = datetime.now(ist)   
 
     new_size = request.form.get("new_size")
     update_fields = {
@@ -716,7 +719,7 @@ def cancel_return(order_id):
     if order:
         request_time = order.get("return_requested_at")
 
-        if request_time and (datetime.now() - request_time).days <= 3:
+        if request_time and (datetime.now(ist) - request_time).days <= 3:
             orders.update_one(
                 {"order_id": order_id},
                 {
@@ -726,7 +729,7 @@ def cancel_return(order_id):
                         "return_money_on": "",
                 },
                     "$set": {
-                        "return_cancelled_on": datetime.now(),
+                        "return_cancelled_on": datetime.now(ist),
                         "status" : "Return Cancelled"
                         }
                 }  
@@ -748,7 +751,7 @@ def cancel_exchange(order_id):
     if order:
         request_time = order.get("exchange_requested_at")
 
-        if request_time and (datetime.now() - request_time).days <= 3:
+        if request_time and (datetime.now(ist) - request_time).days <= 3:
                 orders.update_one(
                     {"order_id": order_id},
                     {
@@ -760,7 +763,7 @@ def cancel_exchange(order_id):
                             "exchange_new_size": ""
                         },
                         "$set": {
-                            "exchange_cancelled_on": datetime.now(),
+                            "exchange_cancelled_on": datetime.now(ist),
                             "status": "Exchange Cancelled"
                         }
                     }
@@ -838,7 +841,7 @@ def place_order():
     item = session.pop('checkout_item', None)
 
     if item and user_find:
-        ordered_time = datetime.now()
+        ordered_time = datetime.now(ist)
 
         order_data = {
             "order_id": str(uuid.uuid4()), 
@@ -1105,22 +1108,22 @@ def update_order_status(order_id):
         update_data = {"status": new_status}
 
         if new_status == "Delivered":
-            update_data["delivered_at"] = datetime.now()
+            update_data["delivered_at"] = datetime.now(ist)
 
         elif new_status == "Delayed":
             current_delivered_at = order.get("delivered_at")
             if current_delivered_at:
                 updated_date = current_delivered_at + timedelta(days=3)
             else:
-                updated_date = datetime.now() + timedelta(days=3)
+                updated_date = datetime.now(ist) + timedelta(days=3)
 
             update_data["delivered_at"] = updated_date
         
         elif new_status == "Returned":
-            update_data["return_money_on"] = datetime.now()
+            update_data["return_money_on"] = datetime.now(ist)
         
         elif new_status == "Exchanged": 
-            update_data["exchange_delivered_on"] = datetime.now()
+            update_data["exchange_delivered_on"] = datetime.now(ist)
 
         
         update_data["status_updated_by"] = session.get("fullname")

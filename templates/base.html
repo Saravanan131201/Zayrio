@@ -161,7 +161,7 @@
             <!-- Link to Clothing category -->
             <a class="nav-link fw-bold text-dark clothing-link pe-0" 
               href="{{ url_for('view_products', category='Clothing') }}?source=main">
-              <span class="{% if category == 'Clothing' or category in ['Mens Wear', 'Womens Wear', 'Kids Boys', 'Kids Girls'] %}underline-title1{% endif %}">
+              <span class="{% if category == 'Clothing' or category in ['Mens_Wear', 'Womens_Wear', 'Kids_Boys', 'Kids_Girls'] %}underline-title1{% endif %}">
                 <i class="bi bi-shop me-2"></i>Clothing
               </span>
             </a>
@@ -187,46 +187,46 @@
 
               <!-- Mens Wear -->
                 <div class="col text-center">
-                  <a href="{{ url_for('view_products', category='Mens Wear') }}"
+                  <a href="{{ url_for('view_products', category='Mens_Wear') }}"
                     class="text-decoration-none text-dark">
                     
                     <img src="{{ url_for('static', filename='images/home_card_banners/mens_wear.png') }}"
                         alt="Mens Wear"
-                        class="img-fluid rounded category-img {% if category == 'Mens Wear' %}active-sub-img{% endif %}">
+                        class="img-fluid rounded category-img {% if category == 'Mens_Wear' %}active-sub-img{% endif %}">
                     
-                    <p class="mt-2 fw-semibold mb-0 {% if category == 'Mens Wear' %}active-sub-text{% endif %}">Men's Wear</p>
+                    <p class="mt-2 fw-semibold mb-0 {% if category == 'Mens_Wear' %}active-sub-text{% endif %}">Men's Wear</p>
                     
-                    <small class="text-muted {% if category == 'Mens Wear' %}active-sub-text{% endif %}">Trendy Picks</small>
+                    <small class="text-muted {% if category == 'Mens_Wear' %}active-sub-text{% endif %}">Trendy Picks</small>
                   </a>
                 </div>
 
 
               <!-- Womens Wear -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Womens Wear') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Womens_Wear') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/womens_wear.png') }}" alt="Womens Wear" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Womens Wear' %}active-sub-text{% endif %}">Women's Wear</p>              
-                  <small class="text-muted {% if category == 'Womens Wear' %}active-sub-text{% endif %}"> Up to 30% Off</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Womens_Wear' %}active-sub-text{% endif %}">Women's Wear</p>              
+                  <small class="text-muted {% if category == 'Womens_Wear' %}active-sub-text{% endif %}"> Up to 30% Off</small>
                  
                 </a>
               </div>
 
               <!-- Kids Boys -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Kids Boys') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Kids_Boys') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/kids_wear_boys.png') }}" alt="Kids Boys" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Kids Boys' %}active-sub-text{% endif %}">Kids Fashion (Boys)</p>
-                  <small class="text-muted {% if category == 'Kids Boys' %}active-sub-text{% endif %}">Playful & Cool Styles</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Kids_Boys' %}active-sub-text{% endif %}">Kids Fashion (Boys)</p>
+                  <small class="text-muted {% if category == 'Kids_Boys' %}active-sub-text{% endif %}">Playful & Cool Styles</small>
                 </a>
               </div>
 
               <!-- Kids Girls -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Kids Girls') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Kids_Girls') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/kids_wear_girls.png') }}" alt="Kids Girls" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Kids Girls' %}active-sub-text{% endif %}">Kids Fashion (Girls)</p>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Kids_Girls' %}active-sub-text{% endif %}">Kids Fashion (Girls)</p>
                   <small class="text-muted {% if category == 'Kids Girls' %}active-sub-text{% endif %}">Bright & Beautiful</small>
-                </a>
+                </a>  
               </div>
 
 
@@ -237,8 +237,8 @@
 
         <!-- Shoes & Bags with Mega Menu -->
         <li class="nav-item dropdown position-static category-dropdown d-flex align-items-center">
-          <a class="nav-link fw-bold text-dark shoesandbags-link" href="{{ url_for('view_products', category='Shoes & Bags') }}?source=main">
-            <span class="{% if category == 'Shoes & Bags' or category in ['Mens Shoes', 'Womens Shoes', 'Bags & Backpacks', 'Handbags & Clutches'] %}underline-title1{% endif %}">
+          <a class="nav-link fw-bold text-dark shoesandbags-link" href="{{ url_for('view_products', category='Shoes_and_Bags') }}?source=main">
+            <span class="{% if category == 'Shoes & Bags' or category in ['Mens_Shoes', 'Womens_Shoes', 'Bags_and_Backpacks', 'Handbags_and_Clutches'] %}underline-title1{% endif %}">
             <i class="bi bi-bag-heart-fill me-2"></i> Shoes & Bags
             </span>
           </a>
@@ -262,38 +262,38 @@
              <div class="row flex-nowrap flex-md-wrap overflow-auto g-3 mt-3 text-center text-md-start px-2">
               <!-- Mens Shoes -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Mens Shoes') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Mens_Shoes') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/mens_shoes.png') }}" alt="Mens Shoes" class="img-fluid rounded category-img">
                   
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Mens Shoes' %}active-sub-text{% endif %}">Men's Shoes</p>
-                  <small class="text-muted {% if category == 'Mens Shoes' %}active-sub-text{% endif %}">Everyday Comfort</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Mens_Shoes' %}active-sub-text{% endif %}">Men's Shoes</p>
+                  <small class="text-muted {% if category == 'Mens_Shoes' %}active-sub-text{% endif %}">Everyday Comfort</small>
                 </a>
               </div>
 
               <!-- Womens Shoes -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Womens Shoes') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Womens_Shoes') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/womens_shoes.png') }}" alt="Womens shoes" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Womens Shoes' %}active-sub-text{% endif %}">Women's Shoes</p>
-                  <small class="text-muted {% if category == 'Womens Shoes' %}active-sub-text{% endif %}">Elegant & Versatile</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Womens_Shoes' %}active-sub-text{% endif %}">Women's Shoes</p>
+                  <small class="text-muted {% if category == 'Womens_Shoes' %}active-sub-text{% endif %}">Elegant & Versatile</small>
                 </a>
               </div>
 
               <!--Bags & Backpacks -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Bags & Backpacks') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Bags_and_Backpacks') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/bags_and_backpacks.png') }}" alt="Bags & Backpacks" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Bags & Backpacks' %}active-sub-text{% endif %}">Bags & Backpacks</p>
-                  <small class="text-muted {% if category == 'Bags & Backpacks' %}active-sub-text{% endif %}">Stylish & Durable</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Bags_and_Backpacks' %}active-sub-text{% endif %}">Bags & Backpacks</p>
+                  <small class="text-muted {% if category == 'Bags_and_Backpacks' %}active-sub-text{% endif %}">Stylish & Durable</small>
                 </a>
               </div>
 
               <!-- Handbags & Clutches -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Handbags & Clutches') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Handbags_and_Clutches') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/handbags_and_clutches.png') }}" alt="Handbags & Clutches" class="img-fluid rounded category-img">
                   <p class="mt-2 fw-semibold mb-0 {% if category == 'Handbags & Clutches' %}active-sub-text{% endif %}">Handbags & Clucthes</p>
-                  <small class="text-muted {% if category == 'Handbags & Clutches' %}active-sub-text{% endif %}">Chic Essentials</small>
+                  <small class="text-muted {% if category == 'Handbags_and_Clutches' %}active-sub-text{% endif %}">Chic Essentials</small>
                 </a>
               </div>
 
@@ -306,7 +306,7 @@
         <!-- Electronics with Mega Menu -->
        <li class="nav-item dropdown position-static category-dropdown d-flex align-items-center">
           <a class="nav-link fw-bold text-dark electronics-link" href="{{ url_for('view_products', category='Electronics') }}?source=main"> 
-            <span class="{% if category == 'Electronics' or category in ['Smart Phones', 'Laptops', 'Tv', 'Watches'] %}underline-title1{% endif %}">
+            <span class="{% if category == 'Electronics' or category in ['Smart_Phones', 'Laptops', 'Tv', 'Watches'] %}underline-title1{% endif %}">
             <i class="bi bi-cpu-fill me-2"></i> Electronics
             </span>
           </a>
@@ -331,10 +331,10 @@
 
               <!-- Smart Phones -->
               <div class="col text-center">
-                <a href="{{ url_for('view_products', category='Smart Phones') }}" class="text-decoration-none text-dark">
+                <a href="{{ url_for('view_products', category='Smart_Phones') }}" class="text-decoration-none text-dark">
                   <img src="{{ url_for('static', filename='images/home_card_banners/smart_phones.png') }}" alt="Smart Phones" class="img-fluid rounded category-img">
-                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Smart Phones' %}active-sub-text{% endif %}">Smart Phones</p>
-                  <small class="text-muted {% if category == 'Smart Phones' %}active-sub-text{% endif %}">New Launches Available</small>
+                  <p class="mt-2 fw-semibold mb-0 {% if category == 'Smart_Phones' %}active-sub-text{% endif %}">Smart Phones</p>
+                  <small class="text-muted {% if category == 'Smart_Phones' %}active-sub-text{% endif %}">New Launches Available</small>
                 </a>
               </div>
 

@@ -37,7 +37,7 @@
  <!-- Subcategory Filter -->
 <div class="card shadow-sm rounded-4">
     <div class="card-header bg-dark text-white">
-    {% if category == 'Clothing' or category == 'Shoes & Bags' %}
+    {% if category == 'Clothing' or category == 'Shoes_and_Bags' %}
       Filter by Gender
     {% elif category == 'Cosmetics' %}
        Filter by Type
@@ -53,16 +53,16 @@
       <label class="form-check-label" for="all">All Products</label>
     </div>
 
-    {% if category == 'Shoes & Bags' %}
+    {% if category == 'Shoes_and_Bags' %}
       <!-- Shoes Group -->
       <div class="fw-bold mt-3">{% if request.args.get('source') != 'hot_deals_main' %} Shoes {% endif %} </div>
       {% for sub in subcategories %}
         {% if "Shoe" in sub %}
-          {% if request.args.get('source') != 'hot_deals_main' or sub in ['Mens Shoes', 'Womens Shoes'] %}
+          {% if request.args.get('source') != 'hot_deals_main' or sub in ['Mens_Shoes', 'Womens_Shoes'] %}
           <div class="form-check mb-2 ms-3">
             <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
               {% if sub == selected_subcategory %}checked{% endif %}>
-            <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+            <label class="form-check-label" for="{{ sub }}">{{ sub.replace('_', ' ') }}</label>
           </div>
            {% endif %}
         {% endif %}
@@ -78,7 +78,7 @@
           <div class="form-check mb-2 ms-3">
             <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
               {% if sub == selected_subcategory %}checked{% endif %}>
-            <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+            <label class="form-check-label" for="{{ sub }}">{{ sub.replace('_', ' ')}}</label>
           </div>
         {% endif %}
       {% endfor %}
@@ -89,11 +89,11 @@
       <!-- Default subcategory rendering -->
       
       {% for sub in subcategories %}
-      {% if not (selected_brand in ['Levis', 'UNITED COLORS OF BENETTON'] and sub in ['Kids Girls', 'Kids Boys']) %}
+      {% if not (selected_brand in ['Levis', 'UNITED COLORS OF BENETTON'] and sub in ['Kids_Girls', 'Kids_Boys']) %}
         <div class="form-check mb-2">
           <input class="form-check-input" type="radio" name="subcategory" value="{{ sub }}" id="{{ sub }}"
             {% if sub == selected_subcategory %}checked{% endif %}>
-          <label class="form-check-label" for="{{ sub }}">{{ sub }}</label>
+          <label class="form-check-label" for="{{ sub }}">{{ sub.replace('_', ' ') }}</label>
         </div>
       {% endif %}
     {% endfor %}
@@ -216,7 +216,13 @@
 {% endif %}
 
     <!-- Apply Button -->
-    <button type="submit" class="btn btn-outline-primary mt-2">Apply Filters</button>
+
+    <div class="d-flex flex-column gap-2">
+      <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+      <a href="{{ url_for('view_products', category=category) }}?source={{ request.args.get('source') }}" class="btn btn-outline-secondary">
+        Clear Filters
+      </a>
+    </div>
 
   </form>
 
@@ -248,7 +254,7 @@
           </div>
         {% else %}
           {% for product in products %}
-            <div class="col-sm-6 {% if search_mode %}col-md-4 col-lg-3{% else %}col-md-4 col-lg-4{% endif %} mb-4 d-flex align-items-stretch">
+            <div class="col-12 col-sm-6 {% if search_mode %}col-md-4 col-lg-3{% else %}col-md-4 col-lg-4{% endif %} mb-4 d-flex align-items-stretch">
               <div class="card shadow-sm rounded-4 w-100 p-2">
                 <a href="{{ url_for('product_summary', product_id=product.product_id) }}">
                   <img src="{{ url_for('static', filename=product.image) }}"
@@ -282,8 +288,9 @@
       {% if total_pages %}
 
       <div class="d-flex justify-content-center mt-4">
-        <nav>
-          <ul class="pagination">
+        <div class="table-responsive">
+          <nav>
+            <ul class="pagination mb-0 flex-nowrap">
 
             {% if page > 1 %}
               <li class="page-item">

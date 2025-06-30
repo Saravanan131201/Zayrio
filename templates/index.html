@@ -9,7 +9,7 @@
 <div id="mainCarousel" class="carousel slide mb-5 shadow-lg rounded-4 overflow-hidden" data-bs-ride="carousel">
   <div class="carousel-inner">
 
-    <a href="{{ url_for('view_products', category='Womens Wear') }}" class="text-decoration-none">
+    <a href="{{ url_for('view_products', category='Womens_Wear') }}" class="text-decoration-none">
       <div class="carousel-item active">
         <img src="{{ url_for('static', filename='images/banners/banner_1.png') }}" class="d-block w-100 carousel-image" alt="Banner 1">
       </div>
@@ -33,7 +33,7 @@
       </div>
     </a>
 
-    <a href="{{ url_for('view_products', category='Shoes & Bags') }}?source=main" class="text-decoration-none">
+    <a href="{{ url_for('view_products', category='Shoes_and_Bags') }}?source=main" class="text-decoration-none">
       <div class="carousel-item">
         <img src="{{ url_for('static', filename='images/banners/banner_5.png') }}" class="d-block w-100 carousel-image" alt="Banner 5">
       </div>
@@ -86,7 +86,7 @@
       </div>
 
       <div class="slide-item">
-        <a href="{{ url_for('view_products', category='Womens Wear', brand='BIBA', discount='50+', source='hot_deals') }}">
+        <a href="{{ url_for('view_products', category='Womens_Wear', brand='BIBA', discount='50+', source='hot_deals') }}">
           <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_02.jpg') }}" class="img-fluid" alt="Deal 2">
         </a>
       </div>
@@ -116,13 +116,13 @@
       </div> -->
 
       <div class="slide-item">
-        <a href="{{ url_for('view_products', category='Kids Girls', brand='PEPPERMINT', discount='50+', source='hot_deals') }}">
+        <a href="{{ url_for('view_products', category='Kids_Girls', brand='PEPPERMINT', discount='50+', source='hot_deals') }}">
           <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_07.jpg') }}" class="img-fluid" alt="Deal 7">
         </a>
       </div>
 
       <div class="slide-item">
-        <a href="{{ url_for('view_products', category='Shoes & Bags', brand='SKECHERS', discount='50+', source='hot_deals_main') }}">
+        <a href="{{ url_for('view_products', category='Shoes_and_Bags', brand='SKECHERS', discount='50+', source='hot_deals_main') }}">
           <img src="{{ url_for('static', filename='images/hot_deals/hot_deals_08.jpg') }}" class="img-fluid" alt="Deal 8">
         </a>
       </div>
@@ -173,28 +173,28 @@
     <div class="col-md-10">
       <div class="tab-content">
         {% for category, items in {
-          'Mens Wear': ['Casual Shirts', 'Formal Shirts', 'Hoodies & Sweatshirts', 'Jackets', 'Jeans', 'T - Shirts'],
-          'Womens Wear': ['Tops & Tunics','Saree', 'Kurta set', 'Jeans & Jeggings', 'Jumpsuits', 'Pants & Palazzos'],
+          'Mens_Wear': ['Casual_Shirts', 'Formal_Shirts', 'Hoodies_and_Sweatshirts', 'Jackets', 'Jeans', 'T_Shirts'],
+          'Womens_Wear': ['Tops_and_Tunics','Saree', 'Kurta_set', 'Jeans_and_Jeggings', 'Jumpsuits', 'Pants_and_Palazzos'],
           
           'Kids': {
-            'Kids Boys': ['Ethnic Wear', 'Trackpants & Joggers', 'Shorts'],
-            'Kids Girls': ['Tops & Tees', 'Jeans & Joggers', 'Infant Basic & Sets']
+            'Kids_Boys': ['Ethnic_Wear', 'Trackpants_and_Joggers', 'Shorts'],
+            'Kids_Girls': ['Tops_and_Tees', 'Jeans_and_Joggers', 'Infant_Basic_and_Sets']
           },
 
           'Shoes': {
-            'Mens Shoes' : ['Formal Shoes', 'Sneakers', 'Sports Shoes', 'Flip Flop & Sliders'],
-            'Womens Shoes' : ['Flat Sandals', 'Heel Sandals', 'Flat Casual Shoes', 'Ballerinas']
+            'Mens_Shoes' : ['Formal_Shoes', 'Sneakers', 'Sports_Shoes', 'Flip_Flop_and_Sliders'],
+            'Womens_Shoes' : ['Flat_Sandals', 'Heel_Sandals', 'Flat_Casual_Shoes', 'Ballerinas']
           },
 
-          'Makeup': ['Lipsticks & Lipbalms', 'Sets & Palettes', 'Foundation', 'Eyeliner & Kajal'],
+          'Makeup': ['Lipsticks_and_Lipbalms', 'Sets_and_Palettes', 'Foundation', 'Eyeliner_and_Kajal'],
         }.items() %}
 
           <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="tab-{{ loop.index }}" role="tabpanel">
-            <h5 class="fw-bold mb-3">{{ category }}</h5>
+            <h5 class="fw-bold mb-3">{{ category.replace('_', ' ') }}</h5>
 
             {% if category == 'Kids' or category == 'Shoes' %}
               {% for subcategory, subitems in items.items() %}
-                <h6 class="fw-semibold mt-3 mb-2">{{ subcategory.replace('Kids ', '') }} </h6>
+                <h6 class="fw-semibold mt-3 mb-2">{% if category == 'Kids' %} {{ subcategory.replace('Kids_', '') }} {% else %}  {{ subcategory.replace('_', ' ') }} {% endif %}</h6>
                 <div class="row g-4 mb-4">
                   {% for item in subitems %}
                     <div class="col-md-3 col-6 category-card text-center">
@@ -204,7 +204,7 @@
                           alt="{{ item }}"
                           class="category-img"
                         >
-                        <div class="mt-2 fw-semibold">{{ item }}</div>
+                        <div class="mt-2 fw-semibold">{{ item.replace('_', ' ') }}</div>
                       </a>
                     </div>
                   {% endfor %}
@@ -221,7 +221,7 @@
                         alt="{{ item }}"
                         class="category-img"
                       >
-                      <div class="mt-2 fw-semibold">{{ item }}</div>
+                      <div class="mt-2 fw-semibold">{{ item.replace('_', ' ') }}</div>
                     </a>
                   </div>
                 {% endfor %}
@@ -248,8 +248,8 @@
   <div class="top-selling-row d-flex flex-wrap justify-content-start gap-4">
     <!-- iPhone -->
     <div class="top-item text-center">
-      <a href="{{ url_for('view_products', category='Smart Phones', subcategory='Apple iPhone 16 Series', brand = 'Apple') }}">
-        <img src="{{ url_for('static', filename='images/top_mobile_phones/iPhone_banner.png') }}" alt="iPhone 16" class="img-fluid">
+      <a href="{{ url_for('view_products', category='Smart_Phones', subcategory='Apple iPhone 16 Series', brand = 'Apple') }}">
+        <img src="{{ url_for('static', filename='images/top_mobile_phones/iphone.png') }}" alt="iPhone 16" class="img-fluid">
       </a>
       <div class="mt-2">
         <h6 class="fw-bold mb-1">iPhone 16 Series</h6>
@@ -259,7 +259,7 @@
 
     <!-- Samsung -->
     <div class="top-item text-center">
-      <a href="{{ url_for('view_products', category='Smart Phones', subcategory='Samsung Galaxy - S Series', brand = 'Samsung') }}">
+      <a href="{{ url_for('view_products', category='Smart_Phones', subcategory='Samsung Galaxy - S Series', brand = 'Samsung') }}">
         <img src="{{ url_for('static', filename='images/top_mobile_phones/samsung_series.png') }}" alt="Samsung S Series" class="img-fluid">
       </a>
       <div class="mt-2">
@@ -270,7 +270,7 @@
 
     <!-- OnePlus -->
     <div class="top-item text-center">
-      <a href="{{ url_for('view_products', category = 'Smart Phones', subcategory = 'One Plus 13 Series', brand = 'One Plus') }}">
+      <a href="{{ url_for('view_products', category = 'Smart_Phones', subcategory = 'One Plus 13 Series', brand = 'One Plus') }}">
         <img src="{{ url_for('static', filename='images/top_mobile_phones/one_plus.png') }}" alt="OnePlus 13" class="img-fluid">
       </a>
       <div class="mt-2">
@@ -281,7 +281,7 @@
 
     <!-- Xiaomi -->
     <div class="top-item text-center">
-      <a href="{{ url_for('view_products', category='Smart Phones', subcategory = 'Xiaomi 14 & 15 Series', brand = 'Xiaomi ') }}">
+      <a href="{{ url_for('view_products', category='Smart_Phones', subcategory = 'Xiaomi 14 & 15 Series', brand = 'Xiaomi ') }}">
         <img src="{{ url_for('static', filename='images/top_mobile_phones/xioami_series.png') }}" alt="Xiaomi Series" class="img-fluid">
       </a>
       <div class="mt-2">
